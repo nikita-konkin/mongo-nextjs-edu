@@ -11,7 +11,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-// import faker from 'faker';
 
 ChartJS.register(
   CategoryScale,
@@ -35,7 +34,9 @@ export default function Linechart(props) {
     let value = e.chart.data.datasets[datasetIndex].data[dataIndex];
     let label = e.chart.data.labels[dataIndex];
 
-    props.setAnomalyDots([...props.anomalyDots, {time: label, anomalyMUF: value} ])
+    props.setAnomalyDots(
+      [...props.anomalyDots, {time: label, anomalyMUF: value} ]
+    )
   }
 
   const options = {
@@ -65,19 +66,10 @@ export default function Linechart(props) {
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
-      // {
-      //   label: 'Dataset 2',
-      //   data: [].concat.apply([], props.data.muf),
-      //   borderColor: 'rgb(53, 162, 235)',
-      //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      // },
     ],
   };
 
-  // console.log(data)
   return (
-    <div>
       <Line options={options} data={data} />
-    </div>
   );
 }

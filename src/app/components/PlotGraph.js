@@ -18,7 +18,6 @@ async function getGraphPointsData (e, activeEls) {
   let [dateStart, setDateStart] = useState('') 
   let [dateStop, setDateStop] = useState('')
   let [graphData, setGraphData] = useState({})
-  // let [graphValues, setGraphValues] = useState({})
   let [graphLables, setGraphLables] = useState({})
   let [anomalyDots, setAnomalyDots] = useState([])
 
@@ -26,7 +25,7 @@ async function getGraphPointsData (e, activeEls) {
 
     setGraphData(mufData)
 
-  }, [])
+  }, [mufData])
 
 
   const getRangeData = () => {
@@ -42,9 +41,12 @@ async function getGraphPointsData (e, activeEls) {
 
     try{
 
-      const res = await fetch(`http://localhost:3000/api/muf/${daterange}`, {
+      const res = await fetch(
+        `http://localhost:3000/api/muf/${daterange}`, 
+        {
         cache: "no-store",
-      });
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Failed to fetch topic");
@@ -99,19 +101,22 @@ async function getGraphPointsData (e, activeEls) {
           <Linechart data = {graphData} setAnomalyDots = {setAnomalyDots} 
             anomalyDots={anomalyDots}/>
         </div>
-        <h3>Период прогноза</h3>
+        <h3>Выбор временного отрезка</h3>
         <div className = "">
           <select id='date_start' className = "mr-10 text-black rounded-xl"
             onClick={callbackSelect}>
-            {mufData.timeFormated.map((val)=><option id = {val.time} key = {val.time}>{val.fTime}</option>)}  
+            {mufData.timeFormated.map((val)=><option id = {val.time} 
+                                key = {val.time}>{val.fTime}</option>)}  
           </select>
           <select id='date_stop' className = "mr-10 text-black rounded-xl" 
             onClick={callbackSelect}>
-            {mufData.timeFormated.map((val) => <option id = {val.time} key = {val.time}>{val.fTime}</option>)}
+            {mufData.timeFormated.map((val) => <option id = {val.time} 
+                                key = {val.time}>{val.fTime}</option>)}
           </select>
         </div>
         <input
-          className="border-2 rounded-xl w-[100%] max-w-[50%] cursor-pointer"
+          className="border-2 rounded-xl w-[100%] 
+                      max-w-[50%] cursor-pointer"
           type = "button" 
           value = "Plot"
           onClick = {getRangeData}
